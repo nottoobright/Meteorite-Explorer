@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loader from 'react-loader'
 import './App.css';
 
 //Components
@@ -13,7 +14,8 @@ class App extends Component {
 
 		this.state = {
 			data: [],
-			searchterm: ''
+			searchterm: '',
+			loading: true
 		}
 	}
 
@@ -31,7 +33,8 @@ class App extends Component {
 			})
 			.then(res => {
 				this.setState({
-					data: res
+					data: res,
+					loading: false
 				})
 			})
 	}
@@ -41,6 +44,9 @@ class App extends Component {
 		if (prevState.searchterm !== this.state.searchterm) {
 			fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
 				.then(res => {
+					this.setState({
+						loading: true
+					})
 					return res.json();
 				})
 				.then(res => {
@@ -51,27 +57,48 @@ class App extends Component {
 						};
 						if( result.length > 0) {
 							this.setState({
-								data: result
+								data: result,
+								loading: false
 							})
 						}
 					});
 				})
-				setTimeout(() => {
-					console.log(this.state.data)
-				}, 	10);
 		}
 	}
 	
 	render() {
+		const loading = this.state.loading;
+		const options = {
+			lines: 13,
+			length: 15,
+			width: 5,
+			radius: 15,
+			scale: 1.00,
+			corners: 1,
+			color: '#FFFFFF',
+			opacity: 0.25,
+			rotate: 0,
+			direction: 1,
+			speed: 1,
+			trail: 60,
+			fps: 20,
+			zIndex: 2e9,
+			top: '50%',
+			left: '50%',
+			shadow: false,
+			hwaccel: false,
+			position: 'absolute'
+		}
 		return (
-			<div className = 'App bg-main'>
-				<Navbar/>
-				<SearchBar handleSearch={this.handleSearch}/>
-				<MeteoriteList data={this.state.data}/>
+			<div className='App bg-main'>
+				<Navbar />
+				<SearchBar handleSearch={this.handleSearch} />
+					<Loader loaded={!loading} options={options}>
+						<MeteoriteList data={this.state.data} />
+					</Loader>
 			</div>
 		)
 	}
-
 }
 
 export default App;
