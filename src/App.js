@@ -15,7 +15,8 @@ class App extends Component {
 		this.state = {
 			data: [],
 			searchterm: '',
-			loading: true
+			error: '',
+			loading: true,
 		}
 	}
 
@@ -42,27 +43,47 @@ class App extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		const result = []
 		if (prevState.searchterm !== this.state.searchterm) {
-			fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
-				.then(res => {
-					this.setState({
-						loading: true
+			if(this.state.searchterm.length > 0) {
+				fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
+					.then(res => {
+						this.setState({
+							loading: true
+						})
+						return res.json();
 					})
-					return res.json();
-				})
-				.then(res => {
-					res.filter((el) => {
-						if (el.name.match(new RegExp(this.state.searchterm, "g"))) {
-							result.push(el);
-							return result
-						};
-						if( result.length > 0) {
-							this.setState({
-								data: result,
-								loading: false
-							})
-						}
-					});
-				})
+					.then(res => {
+						res.filter((el) => {
+							if (el.name.match(new RegExp(this.state.searchterm, "g"))) {
+								result.push(el);
+								return result
+							};
+							if (result.length > 0) {
+								this.setState({
+									data: result,
+									loading: false
+								})
+							}
+							else {
+								this.setState({
+									error: 'No matching result found',
+									loading: false
+								})
+							}
+						});
+					})
+			}
+			else {
+				fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
+					.then(res => {
+						return res.json();
+					})
+					.then(res => {
+						this.setState({
+							data: res,
+							loading: false
+						})
+					})
+			}
 		}
 	}
 	
@@ -93,6 +114,7 @@ class App extends Component {
 			<div className='App bg-main'>
 				<Navbar />
 				<SearchBar handleSearch={this.handleSearch} />
+				{this.state.error}
 					<Loader loaded={!loading} options={options}>
 						<MeteoriteList data={this.state.data} />
 					</Loader>
