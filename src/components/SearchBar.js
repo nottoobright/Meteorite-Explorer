@@ -24,10 +24,10 @@ class SearchBar extends Component {
 
     render() {
         return (
-            <div className='pa4'>
-                <div className="pa2 w-20 bg-white">
+            <div className='pa3'>
+                <div className="pa1 w-20 center bg-white">
                     <input className='pa2' type='text' placeholder='Enter Search Terms' onChange={this.handleChange} />
-                    <button className="pointer ba br2 bg-btn text pa2 ml1 mv1 f4 shadow-hover border-box" onClick={this.handleClick}>Search</button>
+                    <button className="pointer ba br2 bg-btn text pa2 ml1 mv1 f5 ttu fw5 shadow-hover border-box" onClick={this.handleClick}>Search</button>
                 </div>
             </div>
         )
