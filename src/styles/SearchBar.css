@@ -1,0 +1,13 @@
+.bg-btn {
+    background-color: #7986CB;
+}
+
+.text {
+    color: #202437;
+}
+
+input[type="text"] {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid;
+}

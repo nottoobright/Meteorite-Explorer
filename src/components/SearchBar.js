@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/SearchBar.css';
 
 class SearchBar extends Component {
     constructor(props){
@@ -23,9 +24,11 @@ class SearchBar extends Component {
 
     render() {
         return (
-            <div>
-                <input onChange={this.handleChange}/>
-                <button onClick={this.handleClick}>Search</button>
+            <div className='pa4'>
+                <div className="pa2 w-20 bg-white">
+                    <input className='pa2' type='text' placeholder='Enter Search Terms' onChange={this.handleChange} />
+                    <button className="pointer ba br2 bg-btn text pa2 ml1 mv1 f4 shadow-hover border-box" onClick={this.handleClick}>Search</button>
+                </div>
             </div>
         )
     }
