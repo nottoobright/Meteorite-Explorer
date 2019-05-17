@@ -38,7 +38,11 @@ const List = ({ data }) => {
                                     <TableCell align="right">{i.recclass}</TableCell>
                                     <TableCell align="right">{i.mass}</TableCell>
                                     <TableCell align="right">{i.fall}</TableCell>
-                                    <TableCell align="right">{i.year}</TableCell>
+                                    <TableCell align="right">
+                                        {
+                                            typeof i.year === "string" ? i.year.slice(0, 4) : i.year
+                                        }
+                                    </TableCell>
                                     <TableCell align="right">{i.reclat}</TableCell>
                                     <TableCell align="right">{i.reclong}</TableCell>
                                 </TableRow> 
