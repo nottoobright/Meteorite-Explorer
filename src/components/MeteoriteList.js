@@ -10,10 +10,10 @@ import '../styles/Meteorite.css'
 
 const List = ({ data }) => {
     return (
-        <div>
+        <div className="f1 w-80 center pb4">
             <Paper className='root'>
                 <Table className='table'>
-                    <TableHead className="bg-table">
+                    <TableHead className="bg-table fw5">
                         <TableRow>
                             <TableCell>Name</TableCell>
                             <TableCell align="right">Id</TableCell>
