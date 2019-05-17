@@ -25,14 +25,14 @@ class App extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		console.log(prevProps, prevState);
-		if(prevState.searchterm !== this.state.searchterm){
+		if (prevState.searchterm !== this.state.searchterm) {
 			fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
 				.then(res => {
 					return res.json();
 				})
-				.then(res => { 
+				.then(res => {
 					res.filter((el) => {
-						if(el.name.match(new RegExp(this.state.searchterm, "g"))) {
+						if (el.name.match(new RegExp(this.state.searchterm, "g"))) {
 							return el;
 						};
 					});
@@ -45,7 +45,7 @@ class App extends Component {
 
 			setTimeout(() => {
 				console.log(this.state.data)
-			}, 100); 
+			}, 100);
 		}
 	}
 	
