@@ -24,6 +24,18 @@ class App extends Component {
 		console.log(this.state.searchterm);
 	}
 
+	componentDidMount() {
+		fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
+			.then(res => {
+				return res.json();
+			})
+			.then(res => {
+				this.setState({
+					data: res
+				})
+			})
+	}
+
 	componentDidUpdate(prevProps, prevState) {
 		const result = []
 		if (prevState.searchterm !== this.state.searchterm) {
@@ -50,7 +62,6 @@ class App extends Component {
 		}
 	}
 	
-
 	render() {
 		return (
 			<div className = 'App bg-main'>
@@ -60,7 +71,6 @@ class App extends Component {
 			</div>
 		)
 	}
-	
 
 }
 

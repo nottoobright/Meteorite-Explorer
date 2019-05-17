@@ -11,3 +11,7 @@
 .bg-table {
     background-color: #FFB564;
 }
+
+.content:nth-child(odd) {
+    background-color: #FAFAFA;
+}

@@ -29,7 +29,7 @@ const List = ({ data }) => {
                     <TableBody>
                         {
                             data.map((i) => (
-                                <TableRow key={i.id}>
+                                <TableRow className="content" key={i.id}>
                                     <TableCell component='th' scope='row'>
                                         {i.name}
                                     </TableCell>
