@@ -4,6 +4,7 @@ import './App.css';
 //Components
 import Navbar from './components/Navbar';
 import SearchBar from './components/SearchBar';
+import MeteoriteList from './components/MeteoriteList';
 
 
 class App extends Component {
@@ -55,6 +56,7 @@ class App extends Component {
 			<div className = 'App bg-main'>
 				<Navbar/>
 				<SearchBar handleSearch={this.handleSearch}/>
+				<MeteoriteList data={this.state.data}/>
 			</div>
 		)
 	}
