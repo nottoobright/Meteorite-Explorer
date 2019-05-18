@@ -43,13 +43,14 @@ class App extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		const result = []
+		const term = this.state.searchterm.toUpperCase();
 		if (prevState.searchterm !== this.state.searchterm) {
 			if(this.state.searchterm.length > 0) {
 				this.setState({
 					loading: true
 				});
 				this.state.data.filter((el) => {
-					if (el.name.match(new RegExp(this.state.searchterm, "g"))) {
+					if (el.name.toUpperCase().includes(term)) {
 						result.push(el);
 						return result
 					};
@@ -63,14 +64,19 @@ class App extends Component {
 					else {
 						this.setState({
 							error: 'No matching result found',
+							filteredData: [],
 							loading: false
 						})
 					}
 				})
 			}
-		}
-		else {
-
+			else {
+				const data = this.state.data
+				this.setState({
+					filteredData: data,
+					loading: false
+				})
+			}
 		}
 	}
 	
@@ -102,7 +108,9 @@ class App extends Component {
 			<div className='App bg-main'>
 				<Navbar />
 				<SearchBar handleSearch={this.handleSearch} />
-				{this.state.error}
+				<div className='f4 red'>
+					{this.state.error}
+				</div>
 					<Loader loaded={!loading} options={options}>
 						<MeteoriteList data={this.state.filteredData} />
 					</Loader>
