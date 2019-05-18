@@ -14,6 +14,7 @@ class App extends Component {
 
 		this.state = {
 			data: [],
+			filteredData: [],
 			searchterm: '',
 			error: '',
 			loading: true,
@@ -24,7 +25,6 @@ class App extends Component {
 		this.setState({
 			searchterm: term
 		})
-		console.log(this.state.searchterm);
 	}
 
 	componentDidMount() {
@@ -35,6 +35,7 @@ class App extends Component {
 			.then(res => {
 				this.setState({
 					data: res,
+					filteredData: res,
 					loading: false
 				})
 			})
@@ -44,46 +45,32 @@ class App extends Component {
 		const result = []
 		if (prevState.searchterm !== this.state.searchterm) {
 			if(this.state.searchterm.length > 0) {
-				fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
-					.then(res => {
+				this.setState({
+					loading: true
+				});
+				this.state.data.filter((el) => {
+					if (el.name.match(new RegExp(this.state.searchterm, "g"))) {
+						result.push(el);
+						return result
+					};
+					if (result.length > 0) {
 						this.setState({
-							loading: true
-						})
-						return res.json();
+							filteredData: result,
+							loading: false,
+							error: ''
 					})
-					.then(res => {
-						res.filter((el) => {
-							if (el.name.match(new RegExp(this.state.searchterm, "g"))) {
-								result.push(el);
-								return result
-							};
-							if (result.length > 0) {
-								this.setState({
-									data: result,
-									loading: false
-								})
-							}
-							else {
-								this.setState({
-									error: 'No matching result found',
-									loading: false
-								})
-							}
-						});
-					})
-			}
-			else {
-				fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
-					.then(res => {
-						return res.json();
-					})
-					.then(res => {
+					}
+					else {
 						this.setState({
-							data: res,
+							error: 'No matching result found',
 							loading: false
 						})
-					})
+					}
+				})
 			}
+		}
+		else {
+
 		}
 	}
 	
@@ -110,13 +97,14 @@ class App extends Component {
 			hwaccel: false,
 			position: 'absolute'
 		}
+
 		return (
 			<div className='App bg-main'>
 				<Navbar />
 				<SearchBar handleSearch={this.handleSearch} />
 				{this.state.error}
 					<Loader loaded={!loading} options={options}>
-						<MeteoriteList data={this.state.data} />
+						<MeteoriteList data={this.state.filteredData} />
 					</Loader>
 			</div>
 		)
