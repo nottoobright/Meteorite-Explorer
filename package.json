@@ -2,6 +2,10 @@
     "name": "meteorite",
     "version": "0.1.0",
     "private": true,
+    "engines": {
+        "node": "9.11.1",
+        "npm": "6.9.0"
+    },
     "dependencies": {
         "@material-ui/core": "^3.9.3",
         "react": "^16.8.6",
