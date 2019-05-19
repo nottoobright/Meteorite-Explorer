@@ -74,6 +74,7 @@ class App extends Component {
 				const data = this.state.data
 				this.setState({
 					filteredData: data,
+					error: '',
 					loading: false
 				})
 			}
