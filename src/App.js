@@ -7,7 +7,6 @@ import Navbar from './components/Navbar';
 import SearchBar from './components/SearchBar';
 import MeteoriteList from './components/MeteoriteList';
 
-
 class App extends Component {
 	constructor(props){
 		super(props);
@@ -28,7 +27,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
+		fetch('https://data.nasa.gov/resource/gh4g-9sfh.json?$limit=5000')
 			.then(res => {
 				return res.json();
 			})
@@ -46,9 +45,6 @@ class App extends Component {
 		const term = this.state.searchterm.toUpperCase();
 		if (prevState.searchterm !== this.state.searchterm) {
 			if(this.state.searchterm.length > 0) {
-				this.setState({
-					loading: true
-				});
 				this.state.data.filter((el) => {
 					if (el.name.toUpperCase().includes(term)) {
 						result.push(el);
@@ -112,9 +108,9 @@ class App extends Component {
 				<div className='f4 red'>
 					{this.state.error}
 				</div>
-					<Loader loaded={!loading} options={options}>
-						<MeteoriteList data={this.state.filteredData} />
-					</Loader>
+				<Loader loaded={!loading} options={options}>
+					<MeteoriteList data={this.state.filteredData} />
+				</Loader>
 			</div>
 		)
 	}
